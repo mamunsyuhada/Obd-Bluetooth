@@ -1,12 +1,13 @@
 boolean CommandBluetooth(String command) {
   bluetooth.println(command);
+  delay(500);
   String answer = RespondBluetooth();
-  //  Serial.println(answer);
+  Serial.println(answer);
   int pos = answer.indexOf("\n");
   answer = answer.substring(0, answer.length() - 2);
-  boolean status = answer == "OK";
-  if (!status) return false; //Serial.println("AT Ok");
-  else return true;
+  if (answer == "OK") return true; //Serial.println("AT Ok");
+  else if (answer == "FAIL")return false;
+  else return false;
 }
 
 String RespondBluetooth() {
@@ -31,33 +32,23 @@ boolean ConfigBluetooth() {
   idBt       += String(uuidArr[10]);
   idBt       += String(uuidArr[11]);
 
-  String sequenceBt[10] = {
-    "AT",
-    "AT+RESET",
-    "AT+NAME",
-    "AT+ROLE",
-    "AT+CMODE",
-    "AT+BIND",
-    "AT+INIT",
-    "AT+PAIR",
-    "AT+LINK"
-  };
+  Serial.println(idBt);
 
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 15; i++) {
     switch (i) {
         boolean statusBt;
       case (1): // Test AT
-        Serial.print("[HC05] Testing AT... ");
-        statusBt = CommandBluetooth(sequenceBt[0]);
+        Serial.print("[HC05] Testing AT... " );
+        statusBt = CommandBluetooth("AT");
         if (!statusBt) {
           Serial.println("failed");
           i--;
         } else Serial.println("ok");
         break;
         return false;
-      case (2): // Setel pabrikan
+      case (2): // Setel Reset Bluetooth
         Serial.print("[HC05] Resetting ... ");
-        statusBt = CommandBluetooth(sequenceBt[1]);
+        statusBt = CommandBluetooth("AT+RESET");
         if (!statusBt) {
           Serial.println("failed");
           i--;
@@ -66,7 +57,7 @@ boolean ConfigBluetooth() {
         return false;
       case (3): // Set Name
         Serial.print("[HC05] Set Name to Matador... ");
-        statusBt = CommandBluetooth(String(sequenceBt[2]) + "=Matador-Telemetry");
+        statusBt = CommandBluetooth("AT+NAME=Matador-Telemetry");
         if (!statusBt) {
           Serial.println("failed");
           i--;
@@ -75,7 +66,7 @@ boolean ConfigBluetooth() {
         return false;
       case (4): // Set Master Mode
         Serial.print("[HC05] Set role to MASTER... ");
-        statusBt = CommandBluetooth(String(sequenceBt[3]) + "=1");
+        statusBt = CommandBluetooth("AT+ROLE=1");
         if (!statusBt) {
           Serial.println("failed");
           i--;
@@ -84,7 +75,7 @@ boolean ConfigBluetooth() {
         return false;
       case (5): // Set Master Mode
         Serial.print("[HC05] Set mode to fixed address mode... ");
-        statusBt = CommandBluetooth(String(sequenceBt[4]) + "=0");
+        statusBt = CommandBluetooth("AT+CMODE=0");
         if (!statusBt) {
           Serial.println("failed");
           i--;
@@ -93,7 +84,7 @@ boolean ConfigBluetooth() {
         return false;
       case (6): // Set Fixed Address Mode
         Serial.print("[HC05] Binding to " + idBt + " ... ");
-        statusBt = CommandBluetooth(String(sequenceBt[5]) + "=" + idBt);
+        statusBt = CommandBluetooth("AT+BIND=" + idBt);
         if (!statusBt) {
           Serial.println("failed");
           i--;
@@ -102,7 +93,7 @@ boolean ConfigBluetooth() {
         return false;
       case (7): // Initializing to SPP
         Serial.print("[HC05] Initializing to Serial Port Protocol... ");
-        statusBt = CommandBluetooth(String(sequenceBt[6]));
+        statusBt = CommandBluetooth("AT+INIT");
         if (!statusBt) {
           Serial.println("failed");
           i--;
@@ -110,8 +101,9 @@ boolean ConfigBluetooth() {
         break;
         return false;
       case (8): // Pairing to address fixed
-        Serial.print("[HC05] Pairing to " + idBt + "... ");
-        statusBt = CommandBluetooth(String(sequenceBt[7]) + "=" + idBt + ",10");
+        Serial.print("[HC05] Pairing to " + idBt + "... " );
+        statusBt = CommandBluetooth("AT+PAIR=0000,00,111111,10");
+        Serial.println(statusBt);
         if (!statusBt) {
           Serial.println("failed");
           i--;
@@ -120,14 +112,13 @@ boolean ConfigBluetooth() {
         return false;
       case (9): // Connecting to address
         Serial.print("[HC05] Connecting to " + idBt + "... ");
-        statusBt = CommandBluetooth(String(sequenceBt[8]) + "=" + idBt);
+        statusBt = CommandBluetooth("AT+LINK=" + idBt);
         if (!statusBt) {
           Serial.println("failed");
           i--;
         } else Serial.println("ok");
         break;
         return true;
-      default: break;
     }
   }
 }

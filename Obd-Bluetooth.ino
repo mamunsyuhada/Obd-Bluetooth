@@ -19,7 +19,8 @@ void setup() {
 
 void loop() {
   /* Connecting to OBD */
-  Serial.println("[OBD] Version : " + CheckObdVersion());
+  //  Serial.println("[/OBD] Version : " + CheckObdVersion());
   delay(500);
+  Serial.println("I'm Loop");
 
 }
