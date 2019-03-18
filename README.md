@@ -8,7 +8,7 @@
 0. [x] Set communication protocol
 0. [x] Get protocol OBD
 0. [x] Get battery OBD
-0. [ ] Save the Battery Value
+0. [x] Save the Battery Value
 0. [ ] Save the Speed Value
 0. [ ] Save the Coolant Temperature Value
 0. [ ] Save the Engine Load Value
