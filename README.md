@@ -26,7 +26,7 @@
 ## OBD Configuring
 0. ``AT D`` set obd to manufacture default
 0. ``AT Z`` resetting and get version of OBD
-0. ``AT SP <VALUE>`` Set communication protocol, in this project set ``0`` to switch ``AUTO`` protocol
+0. ``AT SP <VALUE>`` Set communication protocol, in this project set ``0`` to switch ``AUTO`` protocol. Example ``AT SP 0``
 0. ``AT DP`` Show the OBD protocol
 0. ``AT RV`` Show the value of battery's vehichle.
 ## Additional for STATUS HC-05
