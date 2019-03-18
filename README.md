@@ -1,7 +1,6 @@
 # Obd-Bluetooth
 ## OBD Physical
 ![examples](/images/obd2_samping.jpg) 
-Tampak Samping
 ## Step TODO List
 0. [x] Cofigure the bluetooh connection
 0. [ ] Communicatin with obd
