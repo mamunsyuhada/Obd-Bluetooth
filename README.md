@@ -28,7 +28,7 @@
 0. ``AT Z`` resetting and get version of OBD
 0. ``AT SP <VALUE>`` Set communication protocol, in this project set ``0`` to switch ``AUTO`` protocol
 0. ``AT DP`` Show the OBD protocol
-0. ``AT RV`` Show the value of battery's vehichle
+0. ``AT RV`` Show the value of battery's vehichle.
 ## Additional for STATUS HC-05
 0. ``AT+STATE`` will respone ``+STATE:INITIALIZED`` until ``AT+INIT``.
 0. if the respone ``+STATE:INQUIRING`` it means that the device has done ``AT+INQ`` and ``AT+INQM=<mode>,<amount device>,<interval timeout>``
