@@ -1,12 +1,12 @@
 boolean CommandBluetooth(String command) {
   bluetooth.println(command);
-  delay(500);
   String answer = RespondBluetooth();
   Serial.println(answer);
   int pos = answer.indexOf("\n");
   answer = answer.substring(0, answer.length() - 2);
   if (answer == "OK") return true; //Serial.println("AT Ok");
   else if (answer == "FAIL")return false;
+  else if (answer == "ERROR(0)")return false;
   else return false;
 }
 

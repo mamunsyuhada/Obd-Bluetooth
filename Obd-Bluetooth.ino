@@ -15,11 +15,13 @@ void setup() {
     if (ConfigBluetooth())break;
   }
   Serial.println("[Bluetooth] Configured and connected");
+  /* Connecting to OBD */
+  for (;;) {
+    if (ConfigOBD())break;
+  }
 }
 
 void loop() {
-  /* Connecting to OBD */
-  Serial.println("[OBD] Version : " + CheckObdVersion());
   delay(500);
   Serial.println("I'm Loop");
 }

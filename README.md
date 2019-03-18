@@ -3,6 +3,7 @@
 ![examples](/images/obd2_samping.jpg) 
 ## Step TODO List
 0. [x] Cofigure the bluetooh connection
+0. [x] Set Obd to manufacture default
 0. [x] Reset OBD or Check OBD Version
 0. [ ] Save the RPM Value
 0. [ ] Save the Battery Value
@@ -21,7 +22,7 @@
 0. ``AT+LINK=0000,00,111111`` connect to the device that previously paired.
 0. finished, this connection like two wires as ``tx`` and ``rx``.
 ## OBD Configuring
-0. 
+0. ``ATD`` set obd to manufacture default
 ## Additional for STATUS HC-05
 0. ``AT+STATE`` will respone ``+STATE:INITIALIZED`` until ``AT+INIT``.
 0. if the respone ``+STATE:INQUIRING`` it means that the device has done ``AT+INQ`` and ``AT+INQM=<mode>,<amount device>,<interval timeout>``
