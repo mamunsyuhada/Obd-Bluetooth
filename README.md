@@ -1,7 +1,5 @@
 # Obd-Bluetooth
 ## OBD Physical
-![examples](/images/obd-image.jpg) 
-Tampak Depan 
 ![examples](/images/obd2_samping.jpg) 
 Tampak Samping
 ## Step TODO List
