@@ -45,7 +45,6 @@ boolean ConfigOBD() {
           i--;
           Serial.println("not found");
         }
-
         return true;
         break;
     }

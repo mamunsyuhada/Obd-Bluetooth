@@ -23,13 +23,15 @@
 0. ``AT+PAIR=0000,00,111111,20`` pair to the slave object, OBDII.
 0. ``AT+LINK=0000,00,111111`` connect to the device that previously paired.
 0. finished, this connection like two wires as ``tx`` and ``rx``.
+## Additional for STATUS HC-05
+0. ``AT+STATE`` will respone ``+STATE:INITIALIZED`` until ``AT+INIT``.
+0. if the respone ``+STATE:INQUIRING`` it means that the device has done ``AT+INQ`` and ``AT+INQM=<mode>,<amount device>,<interval timeout>``
+0. it will respone ``+STATE:PAIRING`` when HC-05 configured to ``AT+PAIR=<****,**,******>,<interval timeout>``. To unpair the device, command ``AT+RMAAD`` or ``AT+RESET``. In ``RESET`` condition, the device will give state in ``INITIALIZED``.
 ## OBD Configuring
 0. ``AT D`` set obd to manufacture default
 0. ``AT Z`` resetting and get version of OBD
 0. ``AT SP <VALUE>`` Set communication protocol, in this project set ``0`` to switch ``AUTO`` protocol. Example ``AT SP 0``
 0. ``AT DP`` Show the OBD protocol
 0. ``AT RV`` Show the value of battery's vehichle.
-## Additional for STATUS HC-05
-0. ``AT+STATE`` will respone ``+STATE:INITIALIZED`` until ``AT+INIT``.
-0. if the respone ``+STATE:INQUIRING`` it means that the device has done ``AT+INQ`` and ``AT+INQM=<mode>,<amount device>,<interval timeout>``
-0. it will respone ``+STATE:PAIRING`` when HC-05 configured to ``AT+PAIR=<****,**,******>,<interval timeout>``. To unpair the device, command ``AT+RMAAD`` or ``AT+RESET``. In ``RESET`` condition, the device will give state in ``INITIALIZED``.
+## OBD ACQUISITION
+
