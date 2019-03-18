@@ -1,6 +1,8 @@
 # Obd-Bluetooth
 ## OBD Physical
-![examples](/images/obd2_samping.jpg) 
+<p align="center">
+  <img width="460" height="300" src="/images/obd2_samping.jpg">
+</p>
 ## Step TODO List
 0. [x] Cofigure the bluetooh connection
 0. [ ] Communicatin with obd
