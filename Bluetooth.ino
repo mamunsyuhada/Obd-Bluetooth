@@ -1,7 +1,7 @@
 boolean CommandBluetooth(String command) {
   bluetooth.println(command);
   String answer = RespondBluetooth();
-  Serial.println(answer);
+  //  Serial.println(answer);
   int pos = answer.indexOf("\n");
   answer = answer.substring(0, answer.length() - 2);
   if (answer == "OK") return true; //Serial.println("AT Ok");
@@ -16,25 +16,25 @@ String RespondBluetooth() {
 }
 
 boolean ConfigBluetooth() {
-  int uuidArr[] = {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1};
-  String idBt = String(uuidArr[0]);
-  idBt       += String(uuidArr[1]);
-  idBt       += String(uuidArr[2]);
-  idBt       += String(uuidArr[3]);
+  String idBt = String(addrArr[0]);
+  idBt       += String(addrArr[1]);
+  idBt       += String(addrArr[2]);
+  idBt       += String(addrArr[3]);
   idBt       += ",";
-  idBt       += String(uuidArr[4]);
-  idBt       += String(uuidArr[5]);
+  idBt       += String(addrArr[4]);
+  idBt       += String(addrArr[5]);
   idBt       += ",";
-  idBt       += String(uuidArr[6]);
-  idBt       += String(uuidArr[7]);
-  idBt       += String(uuidArr[8]);
-  idBt       += String(uuidArr[9]);
-  idBt       += String(uuidArr[10]);
-  idBt       += String(uuidArr[11]);
+  idBt       += String(addrArr[6]);
+  idBt       += String(addrArr[7]);
+  idBt       += String(addrArr[8]);
+  idBt       += String(addrArr[9]);
+  idBt       += String(addrArr[10]);
+  idBt       += String(addrArr[11]);
 
-  Serial.println(idBt);
+  //  Serial.println(idBt);
 
   for (int i = 0; i < 15; i++) {
+    Serial.println("[sw]:" + String(i));
     switch (i) {
         boolean statusBt;
       case (1): // Test AT
@@ -103,7 +103,7 @@ boolean ConfigBluetooth() {
       case (8): // Pairing to address fixed
         Serial.print("[HC05] Pairing to " + idBt + "... " );
         statusBt = CommandBluetooth("AT+PAIR=0000,00,111111,10");
-        Serial.println(statusBt);
+        //        Serial.println(statusBt);
         if (!statusBt) {
           Serial.println("failed");
           i--;

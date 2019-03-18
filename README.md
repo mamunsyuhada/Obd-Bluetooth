@@ -5,7 +5,9 @@
 0. [x] Cofigure the bluetooh connection
 0. [x] Set Obd to manufacture default
 0. [x] Reset OBD or Check OBD Version
-0. [ ] Save the RPM Value
+0. [x] Set communication protocol
+0. [x] Get protocol OBD
+0. [x] Get battery OBD
 0. [ ] Save the Battery Value
 0. [ ] Save the Speed Value
 0. [ ] Save the Coolant Temperature Value
@@ -22,7 +24,11 @@
 0. ``AT+LINK=0000,00,111111`` connect to the device that previously paired.
 0. finished, this connection like two wires as ``tx`` and ``rx``.
 ## OBD Configuring
-0. ``ATD`` set obd to manufacture default
+0. ``AT D`` set obd to manufacture default
+0. ``AT Z`` resetting and get version of OBD
+0. ``AT SP <VALUE>`` Set communication protocol, in this project set ``0`` to switch ``AUTO`` protocol
+0. ``AT DP`` Show the OBD protocol
+0. ``AT RV`` Show the value of battery's vehichle
 ## Additional for STATUS HC-05
 0. ``AT+STATE`` will respone ``+STATE:INITIALIZED`` until ``AT+INIT``.
 0. if the respone ``+STATE:INQUIRING`` it means that the device has done ``AT+INQ`` and ``AT+INQM=<mode>,<amount device>,<interval timeout>``

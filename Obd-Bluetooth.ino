@@ -1,6 +1,8 @@
 #define bluetooth Serial2
 #define keybluetooth 32
 
+int addrArr[] = {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1};
+
 void setup() {
   pinMode(keybluetooth, OUTPUT);
   digitalWrite(keybluetooth, HIGH);
