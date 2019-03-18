@@ -1,4 +1,5 @@
 String CheckObdVersion() {
   bluetooth.println("ATZ");
-  return RespondBluetooth();
+  String answer = RespondBluetooth();
+  return answer = answer.substring(0, answer.indexOf(">") - 1);
 }

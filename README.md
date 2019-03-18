@@ -2,8 +2,8 @@
 ## OBD Physical
 ![examples](/images/obd2_samping.jpg) 
 ## Step TODO List
-0. [x] Cofigure the bluetooh connection
-0. [ ] Communicatin with obd
+### [x] Cofigure the bluetooh connection
+### [ ] Communicatin with obd
 0. [ ] Save the RPM Value
 0. [ ] Save the Battery Value
 0. [ ] Save the Speed Value
