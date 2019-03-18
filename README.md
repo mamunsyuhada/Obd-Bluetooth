@@ -16,10 +16,10 @@
 0. ``AT+ROLE=1`` set the role as ``MASTER``.
 0. ``AT+CMODE=0`` set mode to fixed device address, in this case only one connection. But if this device is changed the mode to ``1``, it will can connect to any address.
 0. ``AT+BIND=0000,00,111111`` save the object connection.
-0. ``AT+INIT`` Initializing to Serial Port Protocol
+0. ``AT+INIT`` Initializing to Serial Port Protocol.
 0. ``AT+PAIR=0000,00,111111,20`` pair to the slave object, OBDII.
 0. ``AT+LINK=0000,00,111111`` connect to the device that previously paired.
-0. finished, this connection like a wire as UART/Serial
+0. finished, this connection like two wires as tx and rx.
 ## OBD Configuring
 0. 
 ## Additional for STATUS HC-05
