@@ -12,3 +12,4 @@
 ## STATUS HC-05
 0. ``AT+STATE`` will respone ``+STATE:INITIALIZED`` until ``AT+INIT``.
 0. if the respone ``+STATE:INQUIRING`` it means that the device has done ``AT+INQ`` and ``AT+INQM=<mode>,<amount device>,<interval timeout>``
+0. it will respone ``+STATE:PAIRING`` when HC-05 configured to ``AT+PAIR=<****,**,******>,<interval timeout>``. To unpair the device, command ``AT+RMAAD`` or ``AT+RESET``. In ``RESET`` condition, the device will give state in ``INITIALIZED``.
