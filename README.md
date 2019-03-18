@@ -19,7 +19,7 @@
 0. ``AT+INIT`` Initializing to Serial Port Protocol.
 0. ``AT+PAIR=0000,00,111111,20`` pair to the slave object, OBDII.
 0. ``AT+LINK=0000,00,111111`` connect to the device that previously paired.
-0. finished, this connection like two wires as tx and rx.
+0. finished, this connection like two wires as ``tx`` and ``rx``.
 ## OBD Configuring
 0. 
 ## Additional for STATUS HC-05
