@@ -34,7 +34,7 @@ boolean ConfigBluetooth() {
   //  Serial.println(idBt);
 
   for (int i = 0; i < 15; i++) {
-    Serial.println("[sw]:" + String(i));
+    //    Serial.println("[sw]:" + String(i));
     switch (i) {
         boolean statusBt;
       case (1): // Test AT
@@ -115,7 +115,7 @@ boolean ConfigBluetooth() {
         statusBt = CommandBluetooth("AT+LINK=" + idBt);
         if (!statusBt) {
           Serial.println("failed");
-          i--;
+          i = 0;
         } else Serial.println("ok");
         break;
         return true;

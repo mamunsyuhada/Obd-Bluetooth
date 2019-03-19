@@ -33,5 +33,6 @@
 0. ``AT SP <VALUE>`` Set communication protocol, in this project set ``0`` to switch ``AUTO`` protocol. Example ``AT SP 0``
 0. ``AT DP`` Show the OBD protocol
 0. ``AT RV`` Show the value of battery's vehichle.
+To send a command OBD we can give several styles like ``ATRV``, ``atrv``, ``AT RV``, or ``at rv``. It same.
 ## OBD ACQUISITION
 

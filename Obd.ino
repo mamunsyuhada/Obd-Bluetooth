@@ -15,7 +15,7 @@ boolean ConfigOBD() {
         return false;
       case (2): // Set communication protocol
         Serial.print("[OBD] Set communication protocol... ");
-        answerObd = GetAnswerOBD("AT SP 0");
+        answerObd = setProtocol(3);
         if (answerObd == "OK\r") {
           Serial.println(answerObd);
         }
@@ -35,9 +35,21 @@ boolean ConfigOBD() {
         }
         break;
         return false;
-      case (4): // Get battery mobile
+      case (4): // Tries connection
+        Serial.print("[OBD] Tries connection... ");
+        answerObd = GetAnswerOBD("AT TP 0");
+        if (answerObd == "OK\r") {
+          Serial.println(answerObd);
+        }
+        else {
+          i--;
+          Serial.println("failed");
+        }
+        break;
+        return false;
+      case (5): // Get battery mobile
         Serial.print("[OBD] Batt : ");
-        answerObd = GetAnswerOBD("AT RV");
+        answerObd = getObdBatt();
         if (answerObd.length() > 0) {
           Serial.println(answerObd);
         }
@@ -49,6 +61,28 @@ boolean ConfigOBD() {
         break;
     }
   }
+
+}
+
+String getValueObd(byte PID, int timeout) {
+  int value;
+  boolean status = obd.readPID(PID, value);
+  delay(timeout);
+  if (status) {
+    return String(value);
+  }
+  else {
+    return "timeout";
+  }
+}
+
+String setProtocol(int protocol) {
+  return GetAnswerOBD("AT SP " + String(protocol));
+}
+
+String getObdBatt() {
+  String result = GetAnswerOBD("AT RV");
+  return result.substring(0, result.indexOf("."));
 }
 
 String GetAnswerOBD(String cmd) {
@@ -56,6 +90,8 @@ String GetAnswerOBD(String cmd) {
   String answer = RespondBluetooth();
   answer = answer.substring(answer.indexOf("\n") + 1, answer.indexOf(">") - 1);
   if (answer == "?\r")Serial.println("invalid obd cmd");
+  int error = answer.indexOf("RX");
+  if (error > 0)setProtocol(0);
   //  Serial.println("[Answer OBD]:" + answer);
   return answer;
 }
