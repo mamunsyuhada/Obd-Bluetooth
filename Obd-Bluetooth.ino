@@ -8,6 +8,7 @@ boolean statusTestObd = 0;
 
 int addrArr[] = {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1};
 
+#include <TeensyThreads.h>
 void setup() {
   pinMode(keybluetooth, OUTPUT);
   digitalWrite(keybluetooth, HIGH);
@@ -23,75 +24,95 @@ void setup() {
   }
   Serial.println("[Bluetooth] Configured and connected");
 
+
+  delay(1000);
+
   /* Connecting to OBD */
   for (;;) {
     if (ConfigOBD())break;
   }
   Serial.println("[OBD] Configured and connected");
+
+  delay(1000);
+  threads.addThread(cobaThreads, 1);
+}
+
+void cobaThreads(void) {
+  while (1) {
+    Serial.println("Teensy Thread");
+    delay(400);
+  }
+  threads.yield();
 }
 
 void loop() {
   //TODO
   /* Acquisition PID value */
-  String battObd = getObdBatt();
-  double battResult = StringToDouble(battObd, 32);
-  double battVal = testobd(battObd, battResult, 15, 8);
-  if (statusTestObd) {
-    Serial.println("[Battery]:" + String(battVal, 0) + " V");
+  //  RunObd();
+
+  bluetooth.println("01 0C");
+  String answerRpm = RespondBluetooth();
+  int posRpm = answerRpm.indexOf("41 0C");
+  if (posRpm == 7) {
+    //    Serial.print("RPM Hex:");
+    answerRpm = answerRpm.substring(posRpm, answerRpm.lastIndexOf("\n"));
+    answerRpm = answerRpm.replace("41 0C", "");
+    answerRpm = answerRpm.replace("\n", "");
+    answerRpm = answerRpm.replace(" ", "");
+    answerRpm = answerRpm.replace("\r", "");
+
+    unsigned int rpm = hexToDec(answerRpm) / 4;
+    if (rpm > 0 and rpm < 10000) {
+      Serial.print("RPM: ");
+      Serial.print(rpm);
+      Serial.println(" x");
+    }
   }
 
-  String rpmObd = getValueObd(PID_RPM, 0);
-  double rpmResult = StringToDouble(rpmObd, 32);
-  double rpmVal = testobd(rpmObd, rpmResult, 9000, 100);
-  if (statusTestObd) {
-    Serial.println("[RPM]:" + String(rpmVal, 0) + " x");
+  bluetooth.println("01 0D");
+  String answerFuel = RespondBluetooth();
+  int posFuel = answerFuel.indexOf("41 0D");
+  if (posFuel == 7) {
+    answerFuel = answerFuel.substring(posFuel, answerFuel.lastIndexOf("\n"));
+    answerFuel = answerFuel.replace("41 0D", "");
+    answerFuel = answerFuel.replace("\n", "");
+    answerFuel = answerFuel.replace(" ", "");
+    answerFuel = answerFuel.replace("\r", "");
+    unsigned int fuel = hexToDec(answerFuel);
+    Serial.print("Fuel: ");
+    Serial.print(fuel);
+    Serial.println(" %");
   }
 
-  String engineLoadObd = getValueObd(PID_ENGINE_LOAD, 0);
-  double engineLoadResult = StringToDouble(engineLoadObd, 32);
-  double engineLoadVal = testobd(engineLoadObd, engineLoadResult, 0, 100);
-  if (statusTestObd) {
-    Serial.println("[Engine Load]:" + String(engineLoadVal, 0) + " x");
+  bluetooth.println("01 04");
+  String answerEngineLoad = RespondBluetooth();
+  int posEngineLoad = answerEngineLoad.indexOf("41 04");
+  if (posFuel == 7) {
+    answerEngineLoad = answerEngineLoad.substring(posEngineLoad, answerEngineLoad.lastIndexOf("\n"));
+    answerEngineLoad = answerEngineLoad.replace("41 04", "");
+    answerEngineLoad = answerEngineLoad.replace("\n", "");
+    answerEngineLoad = answerEngineLoad.replace(" ", "");
+    answerEngineLoad = answerEngineLoad.replace("\r", "");
+    unsigned long engineLoad = hexToDec(answerEngineLoad);
+    Serial.print("Engine Load: ");
+    Serial.print(engineLoad);
+    Serial.println(" %");
   }
 
-  String speedObd = getValueObd(PID_SPEED, 0);
-  double speedResult = StringToDouble(speedObd, 32);
-  double speedVal = testobd(speedObd, speedResult, 0, 100);
-  if (statusTestObd) {
-    Serial.println("[Speed]:" + String(speedVal, 0) + " KMph");
+  bluetooth.println("01 05");
+  String answerCoolant = RespondBluetooth();
+  int posCoolant = answerCoolant.indexOf("41 05");
+  if (posCoolant == 7) {
+    answerCoolant = answerCoolant.substring(posCoolant, answerCoolant.lastIndexOf("\n"));
+    answerCoolant = answerCoolant.replace("41 05", "");
+    answerCoolant = answerCoolant.replace("\n", "");
+    answerCoolant = answerCoolant.replace(" ", "");
+    answerCoolant = answerCoolant.replace("\r", "");
+    unsigned long coolant = hexToDec(answerCoolant);
+    Serial.print("Coolant Temperature: ");
+    Serial.print(coolant);
+    Serial.println(" °C");
   }
-
-  String coolantObd = getValueObd(PID_COOLANT_TEMP, 0);
-  double coolantResult = StringToDouble(coolantObd, 32);
-  double coolantVal = testobd(coolantObd, coolantResult, 0, 100);
-  if (statusTestObd) {
-    Serial.println("[Coolant Temp]:" + String(coolantVal, 0) + " °C");
-  }
-
-
-  //  String engineLoad = GetAnswerOBD("01 04");
-  //  Serial.println("[Engine Load] : " + engineLoad);
-  //  engineLoad = engineLoad.substring(6, engineLoad.length()-1);
-  //  Serial.print("Engine Load }}");
-  //  Serial.println(engineLoad);
-  //  String coolantTemp = GetAnswerOBD("01 05");
-  //  Serial.println("[Coolant Temperature] : " + coolantTemp);
-  //  String rpm = GetAnswerOBD("01 0C");
-  //  Serial.println("[rpm] : " + rpm);
-  //  String velocity = GetAnswerOBD("01 0D");
-  //  Serial.println("[velocity] : " + velocity);
-  //  String rpmObd = getValueObd(PID_RPM, 0);
-  //  double rpmTest = StringToDouble(rpmObd, 32);
-  //  int rpmVal;
-  //  if (testobd(rpmObd, rpmVal, 9000, 100)) {
-  //    Serial.println("[OBD]" + String(rpmVal));
-  //  }
-
-  //  String coolantObd = getValueObd(PID_COOLANT_TEMP, 0);
-  //  Serial.println("[Coolant]:" + coolantObd);
-  //  String speedObd = getValueObd(PID_SPEED, 0);
-  //  Serial.println("[Speed]:" + speedObd);
-  delay(500);
 }
 
 double testobd(String resultObd, double resultVal,

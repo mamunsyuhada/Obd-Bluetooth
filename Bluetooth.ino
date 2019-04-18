@@ -102,7 +102,7 @@ boolean ConfigBluetooth() {
         return false;
       case (8): // Pairing to address fixed
         Serial.print("[HC05] Pairing to " + idBt + "... " );
-        statusBt = CommandBluetooth("AT+PAIR=0000,00,111111,10");
+        statusBt = CommandBluetooth("AT+PAIR=" + idBt + ",10");
         //        Serial.println(statusBt);
         if (!statusBt) {
           Serial.println("failed");
