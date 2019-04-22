@@ -9,9 +9,9 @@
 0. [x] Get protocol OBD
 0. [x] Get battery OBD
 0. [x] Save the Battery Value
-0. [ ] Save the Speed Value
-0. [ ] Save the Coolant Temperature Value
-0. [ ] Save the Engine Load Value
+0. [x] Save the Speed Value
+0. [x] Save the Coolant Temperature Value
+0. [x] Save the Engine Load Value
 ### Configure Bluetooth in Order
 0. ``AT`` test AT Command of HC-05.
 0. ``AT+RESET`` Set to first initialization, this command does'nt set to default from manufacture.
@@ -35,4 +35,7 @@
 0. ``AT RV`` Show the value of battery's vehichle.
 To send a command OBD we can give several styles like ``ATRV``, ``atrv``, ``AT RV``, or ``at rv``. It same.
 ## OBD ACQUISITION
-
+0. ``01 0C`` get RPM PID value
+0. ``01 0D`` get Speed PID value
+0. ``01 05`` get Coolant PID value
+0. ``01 04`` get Engine Load PID value
