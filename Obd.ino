@@ -5,34 +5,6 @@ void RunObd() {
   if (statusTestObd) {
     Serial.println("[Battery]:" + String(battVal, 0) + " V");
   }
-
-  String rpmObd = getValueObd(PID_RPM, 0);
-  double rpmResult = StringToDouble(rpmObd, 32);
-  double rpmVal = testobd(rpmObd, rpmResult, 9000, 100);
-  if (statusTestObd) {
-    Serial.println("[RPM]:" + String(rpmVal, 0) + " x");
-  }
-
-  String engineLoadObd = getValueObd(PID_ENGINE_LOAD, 0);
-  double engineLoadResult = StringToDouble(engineLoadObd, 32);
-  double engineLoadVal = testobd(engineLoadObd, engineLoadResult, 0, 100);
-  if (statusTestObd) {
-    Serial.println("[Engine Load]:" + String(engineLoadVal, 0) + " x");
-  }
-
-  String speedObd = getValueObd(PID_SPEED, 0);
-  double speedResult = StringToDouble(speedObd, 32);
-  double speedVal = testobd(speedObd, speedResult, 0, 100);
-  if (statusTestObd) {
-    Serial.println("[Speed]:" + String(speedVal, 0) + " KMph");
-  }
-
-  String coolantObd = getValueObd(PID_COOLANT_TEMP, 0);
-  double coolantResult = StringToDouble(coolantObd, 32);
-  double coolantVal = testobd(coolantObd, coolantResult, 0, 100);
-  if (statusTestObd) {
-    Serial.println("[Coolant Temp]:" + String(coolantVal, 0) + " °C");
-  }
 }
 boolean ConfigOBD() {
   for (int i = 0; i < 10; i++) {
@@ -98,18 +70,6 @@ boolean ConfigOBD() {
     }
   }
 
-}
-
-String getValueObd(byte PID, int timeout) {
-  int value;
-  boolean status = obd.readPID(PID, value);
-  delay(timeout);
-  if (status) {
-    return String(value);
-  }
-  else {
-    return "timeout";
-  }
 }
 
 String setProtocol(int protocol) {

@@ -1,11 +1,12 @@
 #define bluetooth Serial2
 #define keybluetooth 32
 
-#include <OBD2UART.h>
-COBD obd;
+#define TINY_GSM_MODEM_SIM808
+#include <TinyGsmClient.h>
 
 boolean statusTestObd = 0;
 
+uint32_t rateBluetooth = 0;
 int addrArr[] = {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1};
 
 #include <TeensyThreads.h>
@@ -15,7 +16,9 @@ void setup() {
 
   delay(1000);
   /* Begin to init Serial */
-  bluetooth.begin(38400);
+  if (!rateBluetooth) {
+    rateBluetooth = TinyGsmAutoBaud(bluetooth);
+  }
   Serial.begin(9600);
 
   /* Start to config Bluetooth HC-05 */
