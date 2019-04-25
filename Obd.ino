@@ -1,11 +1,50 @@
-void RunObd() {
-  String battObd = getObdBatt();
-  double battResult = StringToDouble(battObd, 32);
-  double battVal = testobd(battObd, battResult, 15, 8);
-  if (statusTestObd) {
-    Serial.println("[Battery]:" + String(battVal, 0) + " V");
+void connectToObdBridge() {
+  /* Start to config Bluetooth HC-05 */
+  for (;;) {
+    if (ConfigBluetooth())break;
   }
+  Serial.println("[Bluetooth] Configured and connected");
+
+  delay(1000);
+  /* Connecting to OBD */
+  for (;;) {
+    if (ConfigOBD())break;
+  }
+  Serial.println("[OBD] Configured and connected");
+  bluetooth.println("01 00");
+  isObdConnected = true;
 }
+
+unsigned int readObdPID(String pid) {
+  unsigned int result = 0;
+
+  bluetooth.println("01 " + pid);
+  String answer = RespondBluetooth();
+
+  int statusConnectObd = answer.indexOf(">");
+  if (statusConnectObd > 0) {
+    Serial.println("Obd Connected");
+    isObdConnected = true;
+  }
+  else {
+    Serial.println("Obd not connected");
+    isObdConnected = false;
+  }
+
+  int pos = answer.indexOf("41 " + pid);
+  if (pos == 7) {
+    answer = answer.substring(pos, answer.lastIndexOf("\n"));
+    answer = answer.replace("41 " + pid, "");
+    answer = answer.replace("\n", "");
+    answer = answer.replace(" ", "");
+    answer = answer.replace("\r", "");
+    result = hexToDec(answer);
+  }
+  else result = 0;
+
+  return result;
+}
+
 boolean ConfigOBD() {
   for (int i = 0; i < 10; i++) {
     //    Serial.println("[sw]:" + String(i));
