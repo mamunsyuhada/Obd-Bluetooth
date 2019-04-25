@@ -1,18 +1,11 @@
 void connectToObdBridge() {
-  /* Start to config Bluetooth HC-05 */
-  for (;;) {
-    if (ConfigBluetooth())break;
+  if (!isObdConnected) {
+    isObdConnected = ConfigBluetooth();
   }
-  Serial.println("[Bluetooth] Configured and connected");
-
-  delay(1000);
-  /* Connecting to OBD */
-  for (;;) {
-    if (ConfigOBD())break;
+  else {
+    isSiapAkuisisi = ConfigOBD();
+    bluetooth.println("01 00");
   }
-  Serial.println("[OBD] Configured and connected");
-  bluetooth.println("01 00");
-  isObdConnected = true;
 }
 
 unsigned int readObdPID(String pid) {
@@ -24,11 +17,11 @@ unsigned int readObdPID(String pid) {
   int statusConnectObd = answer.indexOf(">");
   if (statusConnectObd > 0) {
     Serial.println("Obd Connected");
-    isObdConnected = true;
+    isSiapAkuisisi = true;
   }
   else {
     Serial.println("Obd not connected");
-    isObdConnected = false;
+    isSiapAkuisisi = false;
   }
 
   int pos = answer.indexOf("41 " + pid);
@@ -41,7 +34,6 @@ unsigned int readObdPID(String pid) {
     result = hexToDec(answer);
   }
   else result = 0;
-
   return result;
 }
 

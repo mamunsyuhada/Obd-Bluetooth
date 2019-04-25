@@ -5,6 +5,7 @@
 #include <TinyGsmClient.h>
 
 boolean isObdConnected = false;
+boolean isSiapAkuisisi = false;
 
 uint32_t rateBluetooth = 0;
 int addrArr[] = {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1};
@@ -20,7 +21,6 @@ void setup() {
     rateBluetooth = TinyGsmAutoBaud(bluetooth);
   }
   Serial.begin(9600);
-
   delay(1000);
   threads.addThread(cobaThreads, 1);
 }
@@ -34,7 +34,7 @@ void cobaThreads(void) {
 }
 
 void loop() {
-  if (isObdConnected) {
+  if (isSiapAkuisisi) {
     Serial.println("RPM : " + String(readObdPID("0C")));
     Serial.println("Speed : " + String(readObdPID("0D")));
     Serial.println("Engine Load : " + String(readObdPID("04")));
